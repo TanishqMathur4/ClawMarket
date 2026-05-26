@@ -1,7 +1,7 @@
 {
   "network": "goatTestnet",
   "chainId": 2345,
-  "address": "0x31cE0A0c92E31BD4AC807f17b82019B6C47f4D61",
+  "address": "0x8C7D534Aa9cce2Abe0fBb2a2b1DaF4Ec73aBb711",
   "deployedAt": 12612523,
   "abi": [
     {

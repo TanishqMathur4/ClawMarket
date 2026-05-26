@@ -11,7 +11,7 @@ type LogFile = { transactions: Tx[]; logs: string[] };
 const ADDR_LABELS: Record<string, string> = {
   "0xa500b38564f0e64b841a5038f4b4910ea119d0b0": "ClawCourt Agent",
   "0x10c8d0880c520868f9d130b392d0f2ee51379064": "T2 Gateway",
-  "0x31ce0a0c92e31bd4ac807f17b82019b6c47f4d61": "Escrow Contract",
+  "0x8c7d534aa9cce2abe0fbb2a2b1daf4ec73abb711": "Escrow Contract",
 };
 function addrLabel(a: string) {
   return ADDR_LABELS[a.toLowerCase()] ?? a.slice(0, 6) + "…" + a.slice(-4);
@@ -412,9 +412,9 @@ export default function Home() {
 
           {/* Terminal footer */}
           <div className="px-4 py-2 border-t border-zinc-800/40 text-[10px] text-zinc-600 font-mono flex justify-between">
-            <span>Contract: 0x31cE0A0c92E31BD4AC807f17b82019B6C47f4D61</span>
+            <span>Contract: 0x8C7D534Aa9cce2Abe0fBb2a2b1DaF4Ec73aBb711</span>
             <a
-              href="https://explorer.goat.network/address/0x31cE0A0c92E31BD4AC807f17b82019B6C47f4D61"
+              href="https://explorer.goat.network/address/0x8C7D534Aa9cce2Abe0fBb2a2b1DaF4Ec73aBb711"
               target="_blank"
               rel="noopener noreferrer"
               className="text-emerald-600 hover:text-emerald-400 transition-colors"
@@ -498,7 +498,7 @@ export default function Home() {
 
       {/* ══ FOOTER ══════════════════════════════════════════════════════ */}
       <footer className="mt-5 flex items-center justify-between text-[9px] font-mono text-zinc-700 border-t border-zinc-800/40 pt-3">
-        <span>GOAT Mainnet · Chain 2345 · 0x31cE0A0c92E31BD4AC807f17b82019B6C47f4D61</span>
+        <span>GOAT Mainnet · Chain 2345 · 0x8C7D534Aa9cce2Abe0fBb2a2b1DaF4Ec73aBb711</span>
         <span>ERC-8004 Agent #58 · ClawCourt · OpenClaw Hackathon 2026</span>
       </footer>
     </div>
