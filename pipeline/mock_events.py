@@ -6,11 +6,11 @@ from typing import Callable
 
 logger = logging.getLogger(__name__)
 
-_MOCK_BUYERS  = ["0xBuyer1000000000000000000000000000000000001",
-                  "0xBuyer2000000000000000000000000000000000002"]
-_MOCK_SELLERS = ["0xSeller100000000000000000000000000000000001",
-                  "0xSeller200000000000000000000000000000000002"]
-_MOCK_AMOUNTS = [50_000, 100_000, 30_000]  # tUSDC micro-units (6 decimals)
+_MOCK_BUYERS  = ["0xA1B2C3D4E5F6a1b2c3d4e5f6A1B2C3D4E5F6a1b2",
+                  "0xDeAdBeEfDeAdBeEfDeAdBeEfDeAdBeEfDeAdBeEf"]
+_MOCK_SELLERS = ["0x1234567890AbCdEf1234567890aBcDeF12345678",  # ends 8 (even) → PASS
+                  "0xFeDcBa9876543210FedCba9876543210fEdCbA91"]  # ends 1 (odd)  → FAIL
+_MOCK_AMOUNTS = [500_000_000, 1_200_000_000, 300_000_000]  # 500, 1200, 300 tUSDC (6 decimals)
 
 
 def fire_mock_events(

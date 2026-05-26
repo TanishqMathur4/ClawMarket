@@ -20,26 +20,64 @@ MOCK_MODE = "--mock" in sys.argv or os.environ.get("MOCK_MODE", "").lower() == "
 def _get_verify_payload():
     try:
         from referee import verify_payload as _vp
-        _vp("probe")  # raises NotImplementedError if T3's stub isn't implemented yet
+        # Just check it's importable and callable — don't hit the API yet
+        if not callable(_vp):
+            raise ImportError("verify_payload is not callable")
+        logger.info("Using T3 referee.verify_payload")
 
         def wrapped(raw_payload: str) -> tuple[str, str]:
             result = _vp(raw_payload)
             return result if isinstance(result, tuple) else (result, "")
         return wrapped
-    except (ImportError, NotImplementedError, Exception):
-        logger.warning("referee.verify_payload not ready — using mock verify_payload")
+    except (ImportError, Exception) as e:
+        logger.warning("referee.verify_payload not ready (%s) — using mock verify_payload", e)
 
         def mock(raw_payload: str) -> tuple[str, str]:
-            # Simulate FAIL for seller address ending in "2" to exercise the refund path
-            if raw_payload.endswith("2"):
-                return "FAIL", "Mock referee: payload contains hallucinated content"
-            return "PASS", "Mock referee: payload looks good"
+            import json
+            try:
+                data = json.loads(raw_payload)
+                temp = data.get("temperature")
+                hum  = data.get("humidity")
+                if (isinstance(temp, (int, float)) and
+                        isinstance(hum, (int, float)) and
+                        -50 <= temp <= 100 and 0 <= hum <= 100):
+                    return "PASS", "Mock referee: valid sensor payload — schema OK"
+            except Exception:
+                pass
+            return "FAIL", "Mock referee: malformed or missing fields"
         return mock
 
 
 def _fetch_seller_payload(seller: str) -> str:
-    """Fetch the seller's work output. Replace with real HTTP call when available."""
-    return f"mock payload from seller {seller}"
+    """
+    Fetch the seller's submitted payload.
+    Alternates good/bad based on seller address last hex char:
+    - Even → valid sensor JSON (PASS)
+    - Odd  → corrupted payload (FAIL)
+    """
+    import json, random
+    is_good = int(seller[-1], 16) % 2 == 0
+    if is_good:
+        try:
+            from referee import get_good_agent_payload
+            return get_good_agent_payload()
+        except Exception:
+            return json.dumps({
+                "temperature": round(random.uniform(18.0, 35.0), 2),
+                "humidity":    round(random.uniform(30.0, 80.0), 2),
+            })
+    else:
+        try:
+            from referee import get_bad_agent_payload
+            return get_bad_agent_payload()
+        except Exception:
+            bad_payloads = [
+                "API Error: connection timed out",
+                '{"temperature": "hot", "humidity": "wet"}',
+                '{"temp": 22.5, "hum": 60.1}',
+                "",
+            ]
+            return random.choice(bad_payloads)
 
 
 def _mock_settle(tx_id: bytes, verdict: str) -> str:
