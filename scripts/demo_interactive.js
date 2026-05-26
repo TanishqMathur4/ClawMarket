@@ -4,7 +4,7 @@ require("dotenv").config();
 const { ethers } = require("ethers");
 const readline   = require("readline");
 
-const ESCROW_ADDRESS = "0x31cE0A0c92E31BD4AC807f17b82019B6C47f4D61";
+const ESCROW_ADDRESS = "0x8C7D534Aa9cce2Abe0fBb2a2b1DaF4Ec73aBb711";
 const USDC_ADDRESS   = "0x3022b87ac063DE95b1570F46f5e470F8B53112D8";
 const EXPLORER       = "https://explorer.goat.network";
 
@@ -90,7 +90,7 @@ async function main() {
   const escrowAfterLock = await usdc.balanceOf(ESCROW_ADDRESS);
   const status1 = await escrow.getStatus(txId);
   console.log(`\n  Escrow now holds : ${ethers.formatUnits(escrowAfterLock, dec)} ${sym}`);
-  console.log(`  Status           : ${status1}n → PENDING 🔒`);
+  console.log(`  Status           : ${status1} → PENDING 🔒`);
 
   await prompt("\n▶  Press Enter to run AI Referee evaluation...");
 
@@ -125,7 +125,7 @@ async function main() {
   console.log(`  Buyer  : ${ethers.formatUnits(buyerFinal,  dec)} ${sym}  (was ${ethers.formatUnits(buyerBal,  dec)})`);
   console.log(`  Seller : ${ethers.formatUnits(sellerFinal, dec)} ${sym}  (was ${ethers.formatUnits(sellerBal, dec)}) ← received payment`);
   console.log(`  Escrow : ${ethers.formatUnits(escrowFinal, dec)} ${sym}  (fully drained)`);
-  console.log(`  Status : ${status2}n → RELEASED ✅`);
+  console.log(`  Status : ${status2} → RELEASED ✅`);
   separator();
   console.log("  🎉 ClawCourt escrow lifecycle complete on GOAT Mainnet!");
   separator();
