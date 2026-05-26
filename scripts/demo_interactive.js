@@ -83,7 +83,10 @@ async function main() {
       if (who === "seller") return simSellerBal.toFixed(1) + " " + sym;
       if (who === "escrow") return simEscrowBal.toFixed(1) + " " + sym;
     }
-    const raw = await usdc.balanceOf(who);
+    const addr = who === "buyer" ? buyer.address
+               : who === "seller" ? seller.address
+               : ESCROW_ADDRESS;
+    const raw = await usdc.balanceOf(addr);
     return ethers.formatUnits(raw, dec) + " " + sym;
   };
 
