@@ -46,12 +46,12 @@
     "contracts": [
       {
         "name": "ClawCourtEscrow",
-        "address": "0xa5CC4A850e7DdF0ad3e648Df131c7829c83eE2bf",
+        "address": "0x31cE0A0c92E31BD4AC807f17b82019B6C47f4D61",
         "network": "GOAT"
       },
       {
         "name": "tUSDC",
-        "address": "0xFCA5846c86dC8Df1B1e21447649A08a18B667B92",
+        "address": "0x3022b87ac063DE95b1570F46f5e470F8B53112D8",
         "network": "GOAT"
       }
     ],
