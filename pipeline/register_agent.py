@@ -62,13 +62,16 @@ _IDENTITY_ABI = [
     },
 ]
 
-_SHARED_ABI_PATH = Path(__file__).parent.parent / "shared" / "abi" / "Identity.json"
+_CONTRACT_META_PATH = Path(__file__).parent.parent / "shared" / "contract_meta.json"
 
 
 def _load_abi() -> list:
-    if _SHARED_ABI_PATH.exists():
-        return json.loads(_SHARED_ABI_PATH.read_text())
-    logger.warning("shared/abi/Identity.json not found — using inline minimal ABI")
+    if _CONTRACT_META_PATH.exists():
+        meta = json.loads(_CONTRACT_META_PATH.read_text())
+        abi = meta.get("abi") or []
+        if abi:
+            return abi
+    logger.warning("shared/contract_meta.json has no ABI yet — using inline minimal ABI")
     return _IDENTITY_ABI
 
 
