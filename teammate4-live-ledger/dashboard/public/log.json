@@ -1,0 +1,39 @@
+{
+  "transactions": [
+    {
+      "id": "0xdeadbeef000001",
+      "buyer": "0x1234567890abcdef1234567890abcdef12345678",
+      "seller": "0xabcdef1234567890abcdef1234567890abcdef12",
+      "amount": "25.00 tUSDC",
+      "status": "PENDING"
+    },
+    {
+      "id": "0xdeadbeef000002",
+      "buyer": "0xabcdefabcdefabcdefabcdefabcdefabcdefabcd",
+      "seller": "0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef",
+      "amount": "30.00 tUSDC",
+      "status": "INSPECTING"
+    },
+    {
+      "id": "0xdeadbeef000003",
+      "buyer": "0xfeedfacefeedfacefeedfacefeedfacefeedface",
+      "seller": "0xbeefdeadbeefdeadbeefdeadbeefdeadbeefdead",
+      "amount": "40.00 tUSDC",
+      "status": "RELEASED"
+    }
+  ],
+  "logs": [
+    "[INFO] 0xdeadbeef000001 - Funds locked: 25.00 tUSDC",
+    "[INFO] 0xdeadbeef000001 - Fetching seller payload from mock API...",
+    "[OK] 0xdeadbeef000001 - Referee verdict: PASS",
+    "[TX] 0xdeadbeef000001 - releaseFunds(txId) -> txhash: 0xabc1234",
+    "[INFO] 0xdeadbeef000002 - Funds locked: 30.00 tUSDC",
+    "[INFO] 0xdeadbeef000002 - Fetching seller payload from mock API...",
+    "[ERROR] 0xdeadbeef000002 - Referee verdict: FAIL",
+    "[TX] 0xdeadbeef000002 - refundFunds(txId) -> txhash: 0xdef5678",
+    "[INFO] 0xdeadbeef000003 - Funds locked: 40.00 tUSDC",
+    "[INFO] 0xdeadbeef000003 - Fetching seller payload from mock API...",
+    "[OK] 0xdeadbeef000003 - Referee verdict: PASS",
+    "[TX] 0xdeadbeef000003 - releaseFunds(txId) -> txhash: 0xfeedface"
+  ]
+}
