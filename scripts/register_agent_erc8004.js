@@ -12,26 +12,19 @@ require("dotenv").config();
 const REGISTRY_ADDRESS = "0x8004A169FB4a3325136EB29fA0ceB6D2e539a432";
 const RPC_URL          = "https://rpc.goat.network";
 
-// ERC-8004 registerAgent ABI (minimal)
+// ERC-8004 ABI — correct signature from GOAT hackathon docs
 const ABI = [
   {
-    inputs: [
-      { name: "agentId",     type: "bytes32" },
-      { name: "metadataURI", type: "string"  }
-    ],
-    name: "registerAgent",
+    inputs: [{ name: "name", type: "string" }],
+    name: "register",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function"
   },
   {
-    inputs: [{ name: "agentId", type: "bytes32" }],
-    name: "getAgent",
-    outputs: [
-      { name: "owner",       type: "address" },
-      { name: "metadataURI", type: "string"  },
-      { name: "isActive",    type: "bool"    }
-    ],
+    inputs: [{ name: "", type: "uint256" }],
+    name: "getAgentWallet",
+    outputs: [{ name: "", type: "address" }],
     stateMutability: "view",
     type: "function"
   }
@@ -69,13 +62,13 @@ async function main() {
 
   const registry = new ethers.Contract(REGISTRY_ADDRESS, ABI, signer);
 
-  const tx = await registry.registerAgent(agentId, metadataURI);
+  const tx = await registry.register(agentName);
   console.log("\nTx submitted:", tx.hash);
-  await tx.wait();
+  const receipt = await tx.wait();
 
   console.log("\n✅ Agent registered!");
-  console.log("  agentId (bytes32):", agentId);
   console.log("  Explorer:", `https://explorer.goat.network/tx/${tx.hash}`);
+  console.log("  Check listing: https://8004scan.io/agents?chain=2345");
 }
 
 main().catch((err) => { console.error("❌", err.message); process.exitCode = 1; });

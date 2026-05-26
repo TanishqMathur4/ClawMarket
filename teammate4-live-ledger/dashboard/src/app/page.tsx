@@ -210,7 +210,7 @@ export default function Home() {
           <div className="col-span-6 bg-zinc-900/50 rounded-2xl p-6">Loading terminal…</div>
           <div className="col-span-3 bg-zinc-900/50 rounded-2xl p-6">Loading status…</div>
         </div>
-        <footer className="mt-6 text-xs uppercase tracking-[0.32em] text-zinc-500 border-t border-zinc-800/70 pt-4">GOAT Testnet • ERC-8004 • OpenClaw • Demo Mode</footer>
+        <footer className="mt-6 text-xs uppercase tracking-[0.32em] text-zinc-500 border-t border-zinc-800/70 pt-4">GOAT Mainnet • ERC-8004 • ClawCourt • Agent #58 • Demo Mode</footer>
       </div>
     );
   }
@@ -232,7 +232,7 @@ export default function Home() {
         </div>
           <div className="absolute top-4 right-4 text-right">
             <div className="text-xs text-emerald-300 font-mono">{utcTime}</div>
-            <div className="text-[10px] uppercase text-zinc-500 tracking-wider">GOAT TESTNET</div>
+            <div className="text-[10px] uppercase text-zinc-500 tracking-wider">GOAT MAINNET · CHAIN 2345</div>
           </div>
           {/* Top settlement banner */}
           <div className="mt-4">
@@ -337,7 +337,7 @@ export default function Home() {
         </aside>
       </div>
       <footer className="mt-6 text-xs uppercase tracking-[0.32em] text-zinc-500 border-t border-zinc-800/70 pt-4">
-        GOAT Testnet • ERC-8004 • OpenClaw • Demo Mode
+        GOAT Mainnet (Chain 2345) • ERC-8004 Agent #58 • Contract 0x31cE...D61 • ClawCourt Demo
       </footer>
     </div>
   );
