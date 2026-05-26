@@ -3,7 +3,7 @@
 # Run with: python referee/test_referee.py
 # Requires ANTHROPIC_API_KEY in .env
 
-from referee import verify_payload, get_good_agent_payload, get_bad_agent_payload, BAD_PAYLOADS
+from referee.referee import verify_payload, get_good_agent_payload, get_bad_agent_payload, BAD_PAYLOADS
 
 
 def test_good_payload():

@@ -14,8 +14,8 @@ import anthropic
 from dotenv import load_dotenv
 from pydantic import ValidationError
 
-from models import RefereeVerdict
-from prompts import REFEREE_SYSTEM_PROMPT
+from .models import RefereeVerdict
+from .prompts import REFEREE_SYSTEM_PROMPT
 
 load_dotenv()
 logging.basicConfig(level=logging.INFO, format="[%(levelname)s] %(message)s")
