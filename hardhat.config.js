@@ -18,7 +18,7 @@ module.exports = {
 
     goatTestnet: {
       url: process.env.GOAT_RPC_URL || "https://rpc.testnet3.goat.network",
-      chainId: 2345,
+      chainId: 48816,  // GOAT Testnet3 (2345 = mainnet)
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
     },
   },
@@ -30,7 +30,7 @@ module.exports = {
     customChains: [
       {
         network: "goatTestnet",
-        chainId: 2345,
+        chainId: 48816,  // GOAT Testnet3
         urls: {
           apiURL: "https://explorer.testnet3.goat.network/api",
           browserURL: "https://explorer.testnet3.goat.network",
