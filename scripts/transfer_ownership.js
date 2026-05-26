@@ -4,7 +4,7 @@
 
 const hre = require("hardhat");
 
-const CONTRACT_ADDRESS  = "0xa5CC4A850e7DdF0ad3e648Df131c7829c83eE2bf";
+const CONTRACT_ADDRESS  = "0x31cE0A0c92E31BD4AC807f17b82019B6C47f4D61";
 const GATEWAY_ADDRESS   = "0x10C8D0880C520868f9d130b392d0f2ee51379064";
 
 async function main() {
