@@ -55,7 +55,7 @@ echo -e "${GREEN}[SUCCESS]${NC} Dependencies installed"
 
 # Step 3: Test RPC connection
 echo -e "\n${YELLOW}[STEP 3]${NC} Testing blockchain connection..."
-python -c "
+python3 -c "
 from web3 import Web3
 import os
 w3 = Web3(Web3.HTTPProvider(os.getenv('GOAT_RPC_URL')))
@@ -69,7 +69,7 @@ echo -e "${GREEN}[SUCCESS]${NC} Blockchain connection verified"
 
 # Step 4: Validate contract deployment
 echo -e "\n${YELLOW}[STEP 4]${NC} Validating contract..."
-python -c "
+python3 -c "
 from web3 import Web3
 import os
 
@@ -91,7 +91,7 @@ echo -e "${GREEN}[SUCCESS]${NC} Contract validated"
 echo -e "\n${YELLOW}[STEP 5]${NC} Preparing ERC-8004 registration..."
 
 TIMESTAMP=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-DEPLOYER_ADDRESS=$(python -c "
+DEPLOYER_ADDRESS=$(python3 -c "
 from eth_account import Account
 import os
 account = Account.from_key(os.getenv('GATEWAY_PRIVATE_KEY'))
@@ -112,7 +112,7 @@ echo -e "${GREEN}[SUCCESS]${NC} Metadata prepared"
 if [ "$NETWORK_ENV" = "mainnet" ]; then
     echo -e "\n${YELLOW}[STEP 6]${NC} Registering agent on ERC-8004..."
     
-    python register_agent.py || {
+    python3 register_agent.py || {
         echo -e "${YELLOW}[WARNING]${NC} Agent registration failed (may already be registered)"
     }
     
@@ -123,7 +123,7 @@ fi
 
 # Step 7: Start health check server
 echo -e "\n${YELLOW}[STEP 7]${NC} Starting health check server..."
-nohup python health_check.py > health_check.log 2>&1 &
+nohup python3 health_check.py > health_check.log 2>&1 &
 HEALTH_PID=$!
 echo $HEALTH_PID > health_check.pid
 
@@ -141,7 +141,7 @@ echo -e "${GREEN}[SUCCESS]${NC} Health check server running (PID: $HEALTH_PID)"
 # Step 8: Start main pipeline
 echo -e "\n${YELLOW}[STEP 8]${NC} Starting ClawCourt Pipeline..."
 
-nohup python openclaw_skill.py > pipeline.log 2>&1 &
+nohup python3 openclaw_skill.py > pipeline.log 2>&1 &
 PIPELINE_PID=$!
 echo $PIPELINE_PID > pipeline.pid
 
@@ -161,7 +161,7 @@ echo -e "\n${YELLOW}[STEP 9]${NC} Running post-deployment verification..."
 sleep 5
 
 # Check health
-HEALTH_STATUS=$(curl -s http://localhost:8000/health 2>/dev/null | python -c "import sys, json; data=json.load(sys.stdin); print(data.get('status', 'unknown'))" 2>/dev/null || echo "unknown")
+HEALTH_STATUS=$(curl -s http://localhost:8000/health 2>/dev/null | python3 -c "import sys, json; data=json.load(sys.stdin); print(data.get('status', 'unknown'))" 2>/dev/null || echo "unknown")
 
 if [ "$HEALTH_STATUS" = "healthy" ]; then
     echo -e "${GREEN}[SUCCESS]${NC} Health check passed"
