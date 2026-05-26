@@ -47,3 +47,13 @@ out/
 
 # Claude Code project settings (local overrides)
 .claude/settings.local.json
+
+# Deployment files
+.env.production
+pipeline/.env.production
+*.pid
+*.log
+registration-receipt.json
+agent-metadata.json.bak
+health_check.log
+pipeline.log

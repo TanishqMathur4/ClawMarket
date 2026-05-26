@@ -46,12 +46,12 @@
     "contracts": [
       {
         "name": "ClawCourtEscrow",
-        "address": "${CONTRACT_ADDRESS}",
+        "address": "0xa5CC4A850e7DdF0ad3e648Df131c7829c83eE2bf",
         "network": "GOAT"
       },
       {
         "name": "tUSDC",
-        "address": "${TUSDIC_ADDRESS}",
+        "address": "0xFCA5846c86dC8Df1B1e21447649A08a18B667B92",
         "network": "GOAT"
       }
     ],
@@ -91,6 +91,6 @@
     "goat-network",
     "autonomous-agent"
   ],
-  "registrationTimestamp": "${DEPLOYMENT_TIMESTAMP}",
-  "deployer": "${DEPLOYER_ADDRESS}"
+  "registrationTimestamp": "2026-05-26T19:29:40Z",
+  "deployer": "0x10C8D0880C520868f9d130b392d0f2ee51379064"
 }
