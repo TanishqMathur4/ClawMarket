@@ -1,0 +1,35 @@
+{
+  "_comment": "ClawUp deployment manifest. Assumption: ClawUp UI reads this file to configure the deployment environment, runtime, and lifecycle hooks. Adjust field names if the organiser provides a different schema.",
+
+  "name": "clawcourt-pipeline",
+  "version": "0.2.0",
+  "runtime": "python3.11",
+  "entrypoint": "openclaw_skill.py",
+  "long_running": true,
+  "restart_policy": "on_failure",
+
+  "install": {
+    "command": "pip3 install -r requirements.txt"
+  },
+
+  "on_deploy": {
+    "command": "python3 register_agent.py",
+    "description": "Register this agent on ERC-8004 IdentityRegistry on GOAT Network. Runs once per deployment. Safe to re-run — checks for existing registration before minting."
+  },
+
+  "env": {
+    "GOAT_RPC_URL":               { "required": true,  "description": "GOAT Network RPC endpoint" },
+    "GATEWAY_PRIVATE_KEY":        { "required": true,  "description": "Private key of the gateway wallet (holds gas only — no user funds)", "secret": true },
+    "CONTRACT_ADDRESS":           { "required": true,  "description": "Deployed ClawCourtEscrow address from Teammate 1" },
+    "TUSDC_ADDRESS":              { "required": true,  "description": "tUSDC token contract address" },
+    "IDENTITY_REGISTRY_ADDRESS":  { "required": true,  "description": "ERC-8004 IdentityRegistry address on GOAT mainnet" },
+    "AGENT_JSON_URI":             { "required": true,  "description": "Public HTTPS URL of this agent's /agent.json (used as the ERC-8004 token URI)" },
+    "LOG_FILE_PATH":              { "required": false, "default": "../shared/log.json", "description": "Path where pipeline writes the shared log for the dashboard" },
+    "MOCK_MODE":                  { "required": false, "default": "false", "description": "Set to true to use mock events instead of live chain polling" }
+  },
+
+  "healthcheck": {
+    "description": "Pipeline is healthy if log.json was written within the last 30 seconds",
+    "command": "python3 -c \"import json,time,os; e=json.load(open(os.environ.get('LOG_FILE_PATH','../shared/log.json'))); assert e, 'empty log'\""
+  }
+}
