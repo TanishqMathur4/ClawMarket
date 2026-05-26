@@ -59,6 +59,10 @@ const fallbackLogFile: LogFile = {
 };
 
 export default function Home() {
+  const formatAddr = (a: string) => {
+    if (!a) return "";
+    return a.length > 18 ? `${a.slice(0, 8)}…${a.slice(-6)}` : a;
+  };
   const [txs, setTxs] = useState<Tx[]>([]);
   const [logs, setLogs] = useState<string[]>([]);
   const [alert, setAlert] = useState<{ level: "ok" | "fail"; message: string } | null>(null);
@@ -253,17 +257,36 @@ export default function Home() {
           <h2 className="text-lg font-semibold mb-3">Active Escrow Boxes</h2>
           <div className="flex flex-col gap-3">
             {txs.map((t) => (
-              <div key={t.id} className="p-3 rounded bg-zinc-900/40 border border-zinc-800 animate-pulse-card">
-                <div className="text-xs text-zinc-400">TX ID</div>
-                <div className="font-mono text-sm break-all">{t.id}</div>
-                <div className="mt-2 text-xs text-zinc-400">Buyer</div>
-                <div className="font-mono text-sm break-all">{t.buyer}</div>
-                <div className="mt-2 text-xs text-zinc-400">Seller</div>
-                <div className="font-mono text-sm break-all">{t.seller}</div>
-                <div className="mt-2 flex items-center justify-between">
-                  <div className="text-sm">{t.amount}</div>
-                  <div className={`text-xs px-2 py-1 rounded ${t.status === "REFUNDED" ? "bg-red-700 text-white" : t.status === "RELEASED" ? "bg-green-700 text-white" : "bg-zinc-800 text-zinc-300"}`}>
-                    {t.status}
+              <div key={t.id} className="p-3 rounded bg-[rgba(255,255,255,0.02)] border border-[rgba(255,255,255,0.04)] animate-pulse-card">
+                <div className="flex items-start justify-between gap-2">
+                  <div>
+                    <div className="text-xs text-zinc-400">TX</div>
+                    <div className="font-mono text-sm">{t.id}</div>
+                  </div>
+                  <div className="text-right">
+                    <div className="card-amount">{t.amount}</div>
+                    <div className="text-xs card-addr">{t.seller}</div>
+                  </div>
+                </div>
+                <div className="mt-3 grid grid-cols-2 gap-2 items-center">
+                  <div>
+                    <div className="text-xs text-zinc-400">Buyer</div>
+                    <div className="font-mono text-sm">{formatAddr(t.buyer)}</div>
+                  </div>
+                  <div className="text-right">
+                    <div className="text-xs text-zinc-400">Seller</div>
+                    <div className="font-mono text-sm">{formatAddr(t.seller)}</div>
+                  </div>
+                </div>
+                <div className="mt-3 flex items-center justify-between">
+                  <div className="flex items-center gap-3">
+                    <div className={`status-dot ${String(t.status) === "PENDING" ? "status-pending" : String(t.status) === "INSPECTING" ? "status-inspecting" : String(t.status) === "RELEASED" ? "status-released" : "status-refunded"}`} />
+                    <div className="text-xs text-zinc-300 font-semibold">{t.status}</div>
+                  </div>
+                  <div className="stage-steps">
+                    <div className={`stage-step ${String(t.status) === "PENDING" ? "active" : String(t.status) !== "PENDING" ? "done" : ""}`} />
+                    <div className={`stage-step ${String(t.status) === "INSPECTING" ? "active" : String(t.status) === "RELEASED" || String(t.status) === "REFUNDED" ? "done" : ""}`} />
+                    <div className={`stage-step ${t.status === "RELEASED" || t.status === "REFUNDED" ? "active" : ""}`} />
                   </div>
                 </div>
               </div>

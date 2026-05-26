@@ -1,12 +1,14 @@
 @import "tailwindcss";
 
 :root {
-  --background: #020406;
-  --foreground: #e2f7e0;
-  --terminal: #081012;
-  --terminal-highlight: #0f2c18;
-  --terminal-border: rgba(30, 198, 86, 0.18);
-  --glow: rgba(16, 185, 129, 0.25);
+  --background: #06121a;
+  --foreground: #e6eef3;
+  --muted: #97a5b3;
+  --card: #0b1620;
+  --accent: #0ea5a4; /* teal-ish */
+  --accent-2: #f59e0b; /* amber accent */
+  --danger: #ef4444;
+  --glow: rgba(14, 165, 233, 0.09);
 }
 
 @theme inline {
@@ -23,35 +25,34 @@ body {
 
 body {
   margin: 0;
-  background: radial-gradient(circle at top left, rgba(16, 185, 129, 0.12), transparent 22%),
-    radial-gradient(circle at bottom right, rgba(14, 165, 233, 0.08), transparent 18%),
-    linear-gradient(180deg, #020609 0%, #020406 100%);
+  background: radial-gradient(circle at 10% 8%, rgba(14,165,233,0.035), transparent 18%),
+    radial-gradient(circle at 90% 92%, rgba(245,158,11,0.02), transparent 16%),
+    linear-gradient(180deg, #04161d 0%, #06121a 100%);
   color: var(--foreground);
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font-family: var(--font-sans), system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
   overflow-x: hidden;
 }
 
 .screen-grid {
   background-image:
-    linear-gradient(rgba(16, 185, 129, 0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(16, 185, 129, 0.04) 1px, transparent 1px);
-  background-size: 40px 40px, 40px 40px;
-  opacity: 0.45;
-  mask-image: linear-gradient(180deg, rgba(255,255,255,0.75), transparent 80%);
+    linear-gradient(rgba(14,165,233,0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(245,158,11,0.02) 1px, transparent 1px);
+  background-size: 44px 44px, 44px 44px;
+  opacity: 0.36;
+  mask-image: linear-gradient(180deg, rgba(255,255,255,0.75), transparent 82%);
 }
 
 .bg-ink {
-  background: radial-gradient(circle at top left, rgba(16, 185, 129, 0.08), transparent 18%),
-    linear-gradient(180deg, rgba(0, 0, 0, 0.96), rgba(10, 12, 15, 0.95));
+  background: linear-gradient(180deg, rgba(6,18,26,0.7), rgba(4,12,16,0.78));
 }
 
 .pulse-card {
-  transition: transform 0.35s ease, box-shadow 0.35s ease, background-color 0.35s ease;
+  transition: transform 0.28s ease, box-shadow 0.28s ease, background-color 0.28s ease;
 }
 
 .pulse-card:hover {
-  transform: translateY(-2px) scale(1.003);
-  box-shadow: 0 0 40px rgba(16, 185, 129, 0.18);
+  transform: translateY(-4px);
+  box-shadow: 0 10px 30px rgba(2,8,12,0.6), 0 0 40px var(--glow);
 }
 
 .animate-pulse-card {
@@ -80,9 +81,9 @@ body {
 
 .tx-hash {
   display: inline-block;
-  color: #7df6a0;
+  color: var(--accent);
   font-variant-east-asian: full-width;
-  animation: revealHash 0.9s ease 0.1s both;
+  animation: revealHash 0.9s ease 0.06s both;
 }
 
 @keyframes revealHash {
@@ -163,7 +164,37 @@ body::after {
 .terminal-scroll {
   scroll-behavior: smooth;
   max-height: 520px;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent 8%);
 }
+
+/* Badges and status */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 10px;
+  border-radius: 999px;
+  font-weight: 600;
+  font-size: 12px;
+}
+.status-dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(0,0,0,0.4);
+}
+.status-pending { background: #f59e0b; }
+.status-inspecting { background: var(--accent); }
+.status-released { background: #10b981; }
+.status-refunded { background: var(--danger); }
+
+.stage-steps { display:flex; gap:8px; align-items:center; }
+.stage-step { width:8px; height:8px; border-radius:99px; background:rgba(255,255,255,0.06); }
+.stage-step.active { background: linear-gradient(90deg, var(--accent), var(--accent-2)); box-shadow:0 0 8px var(--glow); }
+.stage-step.done { background: rgba(255,255,255,0.12); }
+
+.card-amount { font-size: 16px; font-weight:700; color: var(--accent-2); }
+.card-addr { color: var(--muted); font-size: 12px; }
 
 /* keep tx-hash emphasis */
 .tx-hash { font-weight: 600; }
