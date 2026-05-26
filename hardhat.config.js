@@ -17,8 +17,8 @@ module.exports = {
     hardhat: {},
 
     goatTestnet: {
-      url: process.env.GOAT_RPC_URL || "https://rpc.testnet3.goat.network",
-      chainId: 48816,  // GOAT Testnet3 (2345 = mainnet)
+      url: process.env.GOAT_RPC_URL || "https://rpc.goat.network",
+      chainId: 2345,  // GOAT Mainnet
       accounts: process.env.PRIVATE_KEY ? [process.env.PRIVATE_KEY] : [],
     },
   },
@@ -30,10 +30,10 @@ module.exports = {
     customChains: [
       {
         network: "goatTestnet",
-        chainId: 48816,  // GOAT Testnet3
+        chainId: 2345,  // GOAT Mainnet
         urls: {
-          apiURL: "https://explorer.testnet3.goat.network/api",
-          browserURL: "https://explorer.testnet3.goat.network",
+          apiURL: "https://explorer.goat.network/api",
+          browserURL: "https://explorer.goat.network",
         },
       },
     ],

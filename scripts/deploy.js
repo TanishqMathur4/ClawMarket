@@ -39,7 +39,7 @@ async function main() {
   console.log("\n✅ ClawCourtEscrow deployed!");
   console.log("  Address    :", address);
   console.log("  Block      :", block);
-  console.log("  Explorer   :", `https://explorer.testnet3.goat.network/address/${address}`);
+  console.log("  Explorer   :", `https://explorer.goat.network/address/${address}`);
 
   // ── Write shared/contract_meta.json ───────────────────────────────────
   const artifact = await hre.artifacts.readArtifact("ClawCourtEscrow");
