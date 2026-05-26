@@ -1,63 +1,49 @@
 {
   "transactions": [
     {
-      "id": "0x0432c165c5cb706d212fdf653d560db7f8e710cc07c98c1cc9ac4e1ceb746af1",
+      "id": "0x9a3f1e72c4b508d163e7a2f9c0152d8e47ba6c31",
       "buyer": "0xa500b38564F0E64b841A5038F4B4910ea119d0B0",
       "seller": "0x10C8D0880C520868f9d130b392d0f2ee51379064",
       "amount": "1.00 USDC.e",
       "status": "RELEASED"
     },
     {
-      "id": "0x72f922b2b2c0f547bb3208de6a62fda83f52b1662f2076bd9e46ce5fe68950f1",
+      "id": "0xc7d5f2a1e83094b6c21f7d5e3a9b042c6f8e1d73",
       "buyer": "0xa500b38564F0E64b841A5038F4B4910ea119d0B0",
-      "seller": "0x8f4B2e19C7d3A05604B12e9f87A1e2D374c6bF93",
+      "seller": "0x10C8D0880C520868f9d130b392d0f2ee51379064",
       "amount": "0.50 USDC.e",
       "status": "REFUNDED"
     },
     {
-      "id": "0x9a3f1e72c4b508d163e7a2f9c0152d8e47ba6c3190f2d4e5a8b71063c9d4e2f1",
+      "id": "0xe1b2c3d4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0",
       "buyer": "0xa500b38564F0E64b841A5038F4B4910ea119d0B0",
       "seller": "0x10C8D0880C520868f9d130b392d0f2ee51379064",
       "amount": "2.00 USDC.e",
-      "status": "PENDING"
-    },
-    {
-      "id": "0xc7d5f2a1e83094b6c21f7d5e3a9b042c6f8e1d73a4b5c62190f3d8e70a2b1c4",
-      "buyer": "0xDeAd81B4d5A2F3C9e61B0724F8E53D2b1C7A6090",
-      "seller": "0xa500b38564F0E64b841A5038F4B4910ea119d0B0",
-      "amount": "0.75 USDC.e",
       "status": "INSPECTING"
     },
     {
-      "id": "0xe1b2c3d4f5a6b7c8d9e0f1a2b3c4d5e6f7a8b9c0d1e2f3a4b5c6d7e8f9a0b1",
-      "buyer": "0x7F4e3C2B1A906D5E849F2c0B3A7D6E1F4C8B2A5D",
-      "seller": "0xa500b38564F0E64b841A5038F4B4910ea119d0B0",
-      "amount": "3.00 USDC.e",
+      "id": "0xf3c2b1a0e9d8c7b6a5f4e3d2c1b0a9f8e7d6c5b4",
+      "buyer": "0xa500b38564F0E64b841A5038F4B4910ea119d0B0",
+      "seller": "0x10C8D0880C520868f9d130b392d0f2ee51379064",
+      "amount": "0.75 USDC.e",
       "status": "PENDING"
     }
   ],
   "logs": [
-    "[INFO] 0x0432c165... - FundsLocked event detected on ClawCourtEscrow",
-    "[INFO] 0x0432c165... - Buyer: 0xa500b3... | Seller: 0x10C8D0... | Amount: 1.00 USDC.e",
-    "[REFEREE] 0x0432c165... - AI Referee spinning up evaluation context...",
-    "[REFEREE] 0x0432c165... - Fetching seller payload from agent endpoint...",
-    "[REFEREE] 0x0432c165... - Schema validation: OK | Data integrity: OK",
-    "[OK] 0x0432c165... - Verdict PASS — payload verified, delivery confirmed",
-    "[TX] 0x0432c165... - releaseFunds(txId) -> txhash: 0x0432c165c5cb706d...",
-    "[INFO] 0x72f922b2... - FundsLocked event detected on ClawCourtEscrow",
-    "[INFO] 0x72f922b2... - Buyer: 0xa500b3... | Seller: 0x8f4B2e... | Amount: 0.50 USDC.e",
-    "[REFEREE] 0x72f922b2... - AI Referee spinning up evaluation context...",
-    "[REFEREE] 0x72f922b2... - Fetching seller payload from agent endpoint...",
-    "[WARN] 0x72f922b2... - Payload contains unverifiable data claims",
-    "[ERROR] 0x72f922b2... - Verdict FAIL — payload contains hallucinated content, trust score 0.12",
-    "[TX] 0x72f922b2... - refundFunds(txId) -> txhash: 0x72f922b2b2c0f547...",
-    "[INFO] 0x9a3f1e72... - FundsLocked event detected on ClawCourtEscrow",
-    "[INFO] 0x9a3f1e72... - Buyer: 0xa500b3... | Seller: 0x10C8D0... | Amount: 2.00 USDC.e",
-    "[REFEREE] 0x9a3f1e72... - AI Referee spinning up evaluation context...",
-    "[INFO] 0xc7d5f2a1... - FundsLocked event detected on ClawCourtEscrow",
-    "[INFO] 0xc7d5f2a1... - Buyer: 0xDeAd81... | Seller: 0xa500b3... | Amount: 0.75 USDC.e",
-    "[REFEREE] 0xc7d5f2a1... - AI Referee inspecting payload...",
-    "[REFEREE] 0xc7d5f2a1... - Verifying ERC-8004 agent identity: Agent #58 (clawcourt)...",
-    "[INFO] 0xe1b2c3d4... - FundsLocked event detected on ClawCourtEscrow"
+    "[LOCK] 0x9a3f…d8e — ClawCourt Agent locked 1.00 USDC.e into escrow",
+    "[REFEREE] 0x9a3f…d8e — AI Referee spinning up evaluation context",
+    "[REFEREE] 0x9a3f…d8e — Fetching seller data payload from endpoint…",
+    "[REFEREE] 0x9a3f…d8e — Schema validation: OK  |  Data integrity: OK",
+    "[REFEREE] 0x9a3f…d8e — Verifying ERC-8004 identity: ClawCourt Agent #58",
+    "[OK] 0x9a3f…d8e — Verdict PASS — payload verified, delivery confirmed",
+    "[TX] 0x9a3f…d8e — releaseFunds() → 0x0432c165c5cb706d212fdf653d560db7f8e710cc",
+    "[LOCK] 0xc7d5…42c — ClawCourt Agent locked 0.50 USDC.e into escrow",
+    "[REFEREE] 0xc7d5…42c — AI Referee evaluating seller payload…",
+    "[WARN] 0xc7d5…42c — Payload contains unverifiable data claims",
+    "[ERROR] 0xc7d5…42c — Verdict FAIL — trust score 0.12, hallucinated content detected",
+    "[TX] 0xc7d5…42c — refundFunds() → 0x72f922b2b2c0f547bb3208de6a62fda83f52b166",
+    "[LOCK] 0xe1b2…9c0 — ClawCourt Agent locked 2.00 USDC.e into escrow",
+    "[REFEREE] 0xe1b2…9c0 — AI Referee analyzing incoming payload…",
+    "[REFEREE] 0xe1b2…9c0 — Verifying ERC-8004 agent identity…"
   ]
 }
