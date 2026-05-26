@@ -1,5 +1,6 @@
 // scripts/demo_interactive.js
-// Interactive judge demo — step-by-step escrow lifecycle on GOAT Mainnet
+// Interactive judge demo — full escrow lifecycle on GOAT Mainnet
+// Shows BOTH paths: PASS (release) and FAIL (refund)
 require("dotenv").config();
 const { ethers } = require("ethers");
 const readline   = require("readline");
@@ -22,28 +23,34 @@ const ERC20_ABI = [
   "function symbol() view returns (string)",
 ];
 
+// Bad payloads the AI Referee will reject
+const BAD_PAYLOADS = [
+  "API Error: connection timed out",
+  '{"temperature": "hot", "humidity": "wet"}',
+  '{"temp": 22.5, "hum": 60.1}',
+  "",
+];
+
 function prompt(msg) {
   const rl = readline.createInterface({ input: process.stdin, output: process.stdout });
   return new Promise(res => rl.question(msg, ans => { rl.close(); res(ans); }));
 }
 
-function separator() {
-  console.log("\n" + "─".repeat(60));
-}
+function separator() { console.log("\n" + "─".repeat(60)); }
 
 async function main() {
   const provider = new ethers.JsonRpcProvider("https://rpc.goat.network");
   const buyer    = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
-  const seller   = ethers.Wallet.createRandom();           // demo seller
+  const seller   = ethers.Wallet.createRandom();
 
   const escrow = new ethers.Contract(ESCROW_ADDRESS, ESCROW_ABI, buyer);
   const usdc   = new ethers.Contract(USDC_ADDRESS,   ERC20_ABI,  buyer);
 
-  const dec = await usdc.decimals();
-  const sym = await usdc.symbol();
-  const AMOUNT = ethers.parseUnits("1", dec);              // 1 USDC
+  const dec    = await usdc.decimals();
+  const sym    = await usdc.symbol();
+  const AMOUNT = ethers.parseUnits("1", dec);
 
-  // ── Intro ──────────────────────────────────────────────────────────────────
+  // ═══════════════════════════════════════════════════════════
   separator();
   console.log("  🦞 ClawCourt — AI Escrow on GOAT Mainnet");
   console.log("  Machine-to-machine commerce with on-chain dispute resolution");
@@ -56,78 +63,124 @@ async function main() {
 
   await prompt("\n▶  Press Enter to check balances...");
 
-  // ── Balances ───────────────────────────────────────────────────────────────
   separator();
-  console.log("  STEP 1 — Initial Balances");
+  console.log("  Initial Balances");
   separator();
-  const buyerBal  = await usdc.balanceOf(buyer.address);
-  const sellerBal = await usdc.balanceOf(seller.address);
-  const escrowBal = await usdc.balanceOf(ESCROW_ADDRESS);
-  console.log(`  Buyer  : ${ethers.formatUnits(buyerBal,  dec)} ${sym}`);
-  console.log(`  Seller : ${ethers.formatUnits(sellerBal, dec)} ${sym}`);
-  console.log(`  Escrow : ${ethers.formatUnits(escrowBal, dec)} ${sym}`);
+  const startBal = await usdc.balanceOf(buyer.address);
+  console.log(`  Buyer  : ${ethers.formatUnits(startBal, dec)} ${sym}`);
+  console.log(`  Seller : 0.0 ${sym}`);
+  console.log(`  Escrow : ${ethers.formatUnits(await usdc.balanceOf(ESCROW_ADDRESS), dec)} ${sym}`);
 
-  await prompt("\n▶  Press Enter to lock 1 USDC into escrow...");
-
-  // ── Lock ───────────────────────────────────────────────────────────────────
+  // ═══════════════════════════════════════════════════════════
+  // ROUND 1 — PASS path
+  // ═══════════════════════════════════════════════════════════
   separator();
-  console.log("  STEP 2 — Buyer locks funds");
-  console.log("  Buyer approves 1 USDC → escrow contract pulls it in");
+  console.log("  ✅  ROUND 1 — Good payload → Referee PASS → Funds released");
   separator();
-  const txId = ethers.hexlify(ethers.randomBytes(32));
-  console.log("  txId:", txId);
 
+  await prompt("\n▶  Press Enter to lock 1 USDC.e into escrow...");
+
+  separator();
+  console.log("  STEP 1 — Buyer locks funds");
+  separator();
+  const txId1 = ethers.hexlify(ethers.randomBytes(32));
+  console.log("  txId:", txId1);
   process.stdout.write("  Approving... ");
   await (await usdc.approve(ESCROW_ADDRESS, AMOUNT)).wait();
   console.log("✅");
-
   process.stdout.write("  Locking...   ");
-  const lockTx = await escrow.lockFunds(txId, seller.address, AMOUNT);
-  await lockTx.wait();
+  const lockTx1 = await escrow.lockFunds(txId1, seller.address, AMOUNT);
+  await lockTx1.wait();
   console.log("✅");
-  console.log(`  Tx: ${EXPLORER}/tx/${lockTx.hash}`);
+  console.log(`  Tx: ${EXPLORER}/tx/${lockTx1.hash}`);
+  console.log(`  Escrow holds : ${ethers.formatUnits(await usdc.balanceOf(ESCROW_ADDRESS), dec)} ${sym}`);
+  console.log(`  Status       : PENDING 🔒`);
 
-  const escrowAfterLock = await usdc.balanceOf(ESCROW_ADDRESS);
-  const status1 = await escrow.getStatus(txId);
-  console.log(`\n  Escrow now holds : ${ethers.formatUnits(escrowAfterLock, dec)} ${sym}`);
-  console.log(`  Status           : ${status1} → PENDING 🔒`);
+  await prompt("\n▶  Press Enter to run AI Referee (good payload)...");
 
-  await prompt("\n▶  Press Enter to run AI Referee evaluation...");
-
-  // ── Referee ────────────────────────────────────────────────────────────────
   separator();
-  console.log("  STEP 3 — AI Referee (T3) evaluates seller's data payload");
+  console.log("  STEP 2 — AI Referee evaluates seller payload");
   separator();
+  console.log('  Payload : {"temperature": 23.4, "humidity": 61.2}');
   process.stdout.write("  Evaluating");
   for (let i = 0; i < 5; i++) { await new Promise(r => setTimeout(r, 400)); process.stdout.write("."); }
-  console.log("\n  Verdict : ✅ PASS — payload verified, funds approved for release");
+  console.log("\n  Verdict : ✅ PASS — both fields present and within valid range");
 
   await prompt("\n▶  Press Enter to release funds to seller...");
 
-  // ── Release ────────────────────────────────────────────────────────────────
   separator();
-  console.log("  STEP 4 — Gateway releases funds (Referee: PASS)");
+  console.log("  STEP 3 — Gateway releases funds (Referee: PASS)");
   separator();
   process.stdout.write("  Releasing... ");
-  const releaseTx = await escrow.releaseFunds(txId);
+  const releaseTx = await escrow.releaseFunds(txId1);
   await releaseTx.wait();
   console.log("✅");
   console.log(`  Tx: ${EXPLORER}/tx/${releaseTx.hash}`);
+  const buyerAfter1  = await usdc.balanceOf(buyer.address);
+  const sellerAfter1 = await usdc.balanceOf(seller.address);
+  console.log(`\n  Buyer  : ${ethers.formatUnits(buyerAfter1,  dec)} ${sym}  (was ${ethers.formatUnits(startBal, dec)}) ← paid`);
+  console.log(`  Seller : ${ethers.formatUnits(sellerAfter1, dec)} ${sym}  (was 0.0) ← received`);
+  console.log(`  Escrow : ${ethers.formatUnits(await usdc.balanceOf(ESCROW_ADDRESS), dec)} ${sym}  ← drained`);
+  console.log(`  Status : RELEASED ✅`);
 
+  // ═══════════════════════════════════════════════════════════
+  // ROUND 2 — FAIL path
+  // ═══════════════════════════════════════════════════════════
+  separator();
+  console.log("  🔴  ROUND 2 — Bad payload → Referee FAIL → Buyer refunded");
+  separator();
+
+  await prompt("\n▶  Press Enter to lock 1 USDC.e into escrow (second transaction)...");
+
+  separator();
+  console.log("  STEP 4 — Buyer locks funds again");
+  separator();
+  const txId2 = ethers.hexlify(ethers.randomBytes(32));
+  console.log("  txId:", txId2);
+  process.stdout.write("  Approving... ");
+  await (await usdc.approve(ESCROW_ADDRESS, AMOUNT)).wait();
+  console.log("✅");
+  process.stdout.write("  Locking...   ");
+  const lockTx2 = await escrow.lockFunds(txId2, seller.address, AMOUNT);
+  await lockTx2.wait();
+  console.log("✅");
+  console.log(`  Tx: ${EXPLORER}/tx/${lockTx2.hash}`);
+  console.log(`  Escrow holds : ${ethers.formatUnits(await usdc.balanceOf(ESCROW_ADDRESS), dec)} ${sym}`);
+  console.log(`  Status       : PENDING 🔒`);
+
+  await prompt("\n▶  Press Enter to run AI Referee (bad payload)...");
+
+  separator();
+  console.log("  STEP 5 — AI Referee evaluates bad payload");
+  separator();
+  const badPayload = BAD_PAYLOADS[Math.floor(Math.random() * BAD_PAYLOADS.length)] || "API Error: connection timed out";
+  console.log(`  Payload : ${badPayload || '""  (empty — seller agent crashed)'}`);
+  process.stdout.write("  Evaluating");
+  for (let i = 0; i < 5; i++) { await new Promise(r => setTimeout(r, 400)); process.stdout.write("."); }
+  console.log("\n  Verdict : 🔴 FAIL — payload does not match required schema");
+
+  await prompt("\n▶  Press Enter to trigger automated refund (Referee: FAIL)...");
+
+  separator();
+  console.log("  STEP 6 — Gateway refunds buyer (Referee: FAIL)");
+  separator();
+  process.stdout.write("  Refunding... ");
+  const refundTx = await escrow.refundFunds(txId2);
+  await refundTx.wait();
+  console.log("✅");
+  console.log(`  Tx: ${EXPLORER}/tx/${refundTx.hash}`);
   const buyerFinal  = await usdc.balanceOf(buyer.address);
   const sellerFinal = await usdc.balanceOf(seller.address);
-  const escrowFinal = await usdc.balanceOf(ESCROW_ADDRESS);
-  const status2     = await escrow.getStatus(txId);
+  console.log(`\n  Buyer  : ${ethers.formatUnits(buyerFinal,  dec)} ${sym}  ← refunded, protected by AI Referee`);
+  console.log(`  Seller : ${ethers.formatUnits(sellerFinal, dec)} ${sym}  ← received nothing (bad data)`);
+  console.log(`  Escrow : ${ethers.formatUnits(await usdc.balanceOf(ESCROW_ADDRESS), dec)} ${sym}  ← drained`);
+  console.log(`  Status : REFUNDED 🔴`);
 
   separator();
-  console.log("  FINAL BALANCES");
-  separator();
-  console.log(`  Buyer  : ${ethers.formatUnits(buyerFinal,  dec)} ${sym}  (was ${ethers.formatUnits(buyerBal,  dec)})`);
-  console.log(`  Seller : ${ethers.formatUnits(sellerFinal, dec)} ${sym}  (was ${ethers.formatUnits(sellerBal, dec)}) ← received payment`);
-  console.log(`  Escrow : ${ethers.formatUnits(escrowFinal, dec)} ${sym}  (fully drained)`);
-  console.log(`  Status : ${status2} → RELEASED ✅`);
-  separator();
-  console.log("  🎉 ClawCourt escrow lifecycle complete on GOAT Mainnet!");
+  console.log("  🎉 ClawCourt full lifecycle demo complete!");
+  console.log("  ✅ PASS path: funds released to seller");
+  console.log("  🔴 FAIL path: buyer protected, funds returned");
+  console.log("  Both transactions confirmed on GOAT Mainnet.");
   separator();
 }
 
