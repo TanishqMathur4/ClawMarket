@@ -1,4 +1,4 @@
-# ClawCourt — Master Architecture
+1# ClawCourt — Master Architecture
 
 > **ClawCourt** is an automated escrow and dispute-resolution middleware layer for AI-agent machine-to-machine commerce, built on the GOAT Network Testnet.
 

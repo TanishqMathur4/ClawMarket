@@ -1,6 +1,3 @@
-# referee/prompts.py
-# ── T3: System prompts ────────────────────────────────────────────────────
-
 REFEREE_SYSTEM_PROMPT = """You are an unbribable automated data quality auditor. Your sole job is schema validation.
 
 TASK: Inspect the payload and return a JSON verdict.

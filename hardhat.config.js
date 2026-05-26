@@ -1,7 +1,4 @@
 require("@nomicfoundation/hardhat-toolbox");
-require("@nomicfoundation/hardhat-ethers");
-
-// Load .env for private key and RPC URL (never commit secrets)
 require("dotenv").config();
 
 /** @type import('hardhat/config').HardhatUserConfig */
@@ -17,10 +14,8 @@ module.exports = {
   },
 
   networks: {
-    // Local Hardhat node (default for tests)
     hardhat: {},
 
-    // GOAT Network Testnet
     goatTestnet: {
       url: process.env.GOAT_RPC_URL || "https://rpc.testnet3.goat.network",
       chainId: 2345,
@@ -28,7 +23,6 @@ module.exports = {
     },
   },
 
-  // Optional: Etherscan-compatible block explorer for GOAT
   etherscan: {
     apiKey: {
       goatTestnet: process.env.GOAT_EXPLORER_API_KEY || "no-key-needed",
