@@ -1,0 +1,23 @@
+{
+  "network": "goat-mainnet",
+  "rpc": {
+    "url": "https://rpc.goat.network",
+    "chainId": 48816,
+    "timeout": 30
+  },
+  "contracts": {
+    "registry": "0x8004000000000000000000000000000000000000"
+  },
+  "polling": {
+    "interval": 2,
+    "batchSize": 100
+  },
+  "gas": {
+    "buffer": 1.2,
+    "maxPrice": "50000000000"
+  },
+  "logging": {
+    "level": "INFO",
+    "file": "/var/log/clawcourt/pipeline.log"
+  }
+}

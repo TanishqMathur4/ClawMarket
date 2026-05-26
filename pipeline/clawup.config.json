@@ -1,0 +1,59 @@
+{
+  "skill": {
+    "name": "ClawCourt-Pipeline",
+    "version": "1.0.0",
+    "description": "AI-powered escrow settlement pipeline for ClawCourt on GOAT Network",
+    "author": "ClawCourt Team",
+    "license": "MIT"
+  },
+  "runtime": {
+    "language": "python",
+    "version": "3.11",
+    "entryPoint": "openclaw_skill.py",
+    "mainFunction": "run_pipeline"
+  },
+  "dependencies": {
+    "pip": [
+      "web3>=6.0.0",
+      "python-dotenv>=1.0.0",
+      "fastapi>=0.104.0",
+      "uvicorn>=0.24.0",
+      "psutil>=5.9.0"
+    ]
+  },
+  "environment": {
+    "required": [
+      "GOAT_RPC_URL",
+      "GATEWAY_PRIVATE_KEY",
+      "CONTRACT_ADDRESS",
+      "TUSDIC_ADDRESS",
+      "NETWORK_ENV"
+    ],
+    "optional": [
+      "LOG_FILE_PATH",
+      "POLLING_INTERVAL",
+      "MAX_RETRIES"
+    ]
+  },
+  "network": {
+    "default": "goat-mainnet",
+    "supported": ["goat-mainnet", "goat-testnet"]
+  },
+  "endpoints": {
+    "health": "/health",
+    "status": "/status",
+    "logs": "/api/logs"
+  },
+  "deployment": {
+    "autoRestart": true,
+    "restartDelay": 5,
+    "maxRestarts": 3,
+    "healthCheckInterval": 30,
+    "gracefulShutdownTimeout": 10
+  },
+  "erc8004": {
+    "autoRegister": true,
+    "metadataFile": "agent-metadata.json",
+    "registryContract": "0x8004000000000000000000000000000000000000"
+  }
+}

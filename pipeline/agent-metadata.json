@@ -1,0 +1,96 @@
+{
+  "agentId": "clawcourt-pipeline-v1",
+  "name": "ClawCourt Settlement Pipeline",
+  "version": "1.0.0",
+  "description": "Autonomous AI agent that monitors blockchain escrow events, verifies transaction payloads using AI referee, and executes settlement transactions on GOAT Network",
+  "category": "DeFi/Escrow",
+  "capabilities": [
+    {
+      "type": "blockchain-monitoring",
+      "description": "Monitors FundsLocked events on ClawCourtEscrow contract",
+      "network": "GOAT"
+    },
+    {
+      "type": "ai-verification",
+      "description": "Integrates with AI referee for payload verification",
+      "provider": "ClawCourt-Referee"
+    },
+    {
+      "type": "transaction-execution",
+      "description": "Autonomous settlement via releaseFunds/refundFunds",
+      "permissions": ["write"]
+    },
+    {
+      "type": "data-logging",
+      "description": "Real-time transaction log for frontend dashboard",
+      "format": "JSON"
+    }
+  ],
+  "interfaces": {
+    "input": {
+      "type": "blockchain-event",
+      "source": "ClawCourtEscrow",
+      "events": ["FundsLocked"]
+    },
+    "output": {
+      "type": "blockchain-transaction",
+      "methods": ["releaseFunds", "refundFunds"]
+    },
+    "api": {
+      "healthCheck": "GET /health",
+      "status": "GET /status",
+      "logs": "GET /api/logs"
+    }
+  },
+  "dependencies": {
+    "contracts": [
+      {
+        "name": "ClawCourtEscrow",
+        "address": "${CONTRACT_ADDRESS}",
+        "network": "GOAT"
+      },
+      {
+        "name": "tUSDC",
+        "address": "${TUSDIC_ADDRESS}",
+        "network": "GOAT"
+      }
+    ],
+    "externalAgents": [
+      {
+        "name": "ClawCourt-Referee-AI",
+        "type": "verification-service",
+        "required": true
+      }
+    ]
+  },
+  "permissions": {
+    "blockchain": {
+      "read": ["events", "contract-state"],
+      "write": ["transactions"]
+    },
+    "data": {
+      "read": ["seller-payload"],
+      "write": ["log-file"]
+    }
+  },
+  "sla": {
+    "availability": "99.5%",
+    "responseTime": "< 5s",
+    "settlementTime": "< 30s"
+  },
+  "contact": {
+    "team": "ClawCourt",
+    "support": "support@clawcourt.io",
+    "documentation": "https://docs.clawcourt.io/pipeline"
+  },
+  "tags": [
+    "escrow",
+    "settlement",
+    "ai-verification",
+    "defi",
+    "goat-network",
+    "autonomous-agent"
+  ],
+  "registrationTimestamp": "${DEPLOYMENT_TIMESTAMP}",
+  "deployer": "${DEPLOYER_ADDRESS}"
+}

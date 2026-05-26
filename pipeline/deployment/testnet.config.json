@@ -1,0 +1,23 @@
+{
+  "network": "goat-testnet",
+  "rpc": {
+    "url": "https://testnet-rpc.goat.network",
+    "chainId": 48817,
+    "timeout": 30
+  },
+  "contracts": {
+    "registry": "0x8004000000000000000000000000000000000000"
+  },
+  "polling": {
+    "interval": 3,
+    "batchSize": 50
+  },
+  "gas": {
+    "buffer": 1.5,
+    "maxPrice": "100000000000"
+  },
+  "logging": {
+    "level": "DEBUG",
+    "file": "./pipeline.log"
+  }
+}
