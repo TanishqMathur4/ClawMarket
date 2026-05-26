@@ -26,7 +26,7 @@ def _get_verify_payload():
             result = _vp(raw_payload)
             return result if isinstance(result, tuple) else (result, "")
         return wrapped
-    except (ImportError, NotImplementedError):
+    except (ImportError, NotImplementedError, Exception):
         logger.warning("referee.verify_payload not ready — using mock verify_payload")
 
         def mock(raw_payload: str) -> tuple[str, str]:
@@ -55,14 +55,11 @@ def handle_event(settle_fn, verify_payload, event: dict) -> None:
     amount = event["amount"]
 
     log_writer.write_log({
-        "txId":            tx_id.hex(),
-        "buyer":           buyer,
-        "seller":          seller,
-        "amount":          f"{amount / 1e6:.2f}",
-        "status":          "PENDING",
-        "refereeVerdict":  None,
-        "refereeReason":   None,
-        "settlementTxHash": None,
+        "txId":   tx_id.hex(),
+        "buyer":  buyer,
+        "seller": seller,
+        "amount": amount,   # raw int micro-USDC — log_writer formats to "X.XX tUSDC"
+        "status": "PENDING",
     })
 
     try:

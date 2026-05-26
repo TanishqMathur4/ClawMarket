@@ -20,6 +20,27 @@
       "seller": "0xbeefdeadbeefdeadbeefdeadbeefdeadbeefdead",
       "amount": "40.00 tUSDC",
       "status": "RELEASED"
+    },
+    {
+      "id": "3920cee97f87e66d9bd4a896df26df179b784dfc29b693a604a063feceb86477",
+      "buyer": "0xBuyer1000000000000000000000000000000000001",
+      "seller": "0xSeller100000000000000000000000000000000001",
+      "amount": "0.05 tUSDC",
+      "status": "RELEASED"
+    },
+    {
+      "id": "95a8c99b2ee7d547461b54fda966047be37b28fa6f8ff89b3345910c080b059d",
+      "buyer": "0xBuyer2000000000000000000000000000000000002",
+      "seller": "0xSeller200000000000000000000000000000000002",
+      "amount": "0.10 tUSDC",
+      "status": "REFUNDED"
+    },
+    {
+      "id": "ab876c1439386a0c5230c4b42ae6a124061f9528dda805bcbada0189997a5cdd",
+      "buyer": "0xBuyer1000000000000000000000000000000000001",
+      "seller": "0xSeller100000000000000000000000000000000001",
+      "amount": "0.03 tUSDC",
+      "status": "RELEASED"
     }
   ],
   "logs": [
@@ -34,6 +55,15 @@
     "[INFO] 0xdeadbeef000003 - Funds locked: 40.00 tUSDC",
     "[INFO] 0xdeadbeef000003 - Fetching seller payload from mock API...",
     "[OK] 0xdeadbeef000003 - Referee verdict: PASS",
-    "[TX] 0xdeadbeef000003 - releaseFunds(txId) -> txhash: 0xfeedface"
+    "[TX] 0xdeadbeef000003 - releaseFunds(txId) -> txhash: 0xfeedface",
+    "[INFO] 3920cee97f87e66d9b... - Funds locked: 0.05 tUSDC",
+    "[OK] 3920cee97f87e66d9b... - Referee verdict: PASS \u2014 Mock referee: payload looks good",
+    "[TX] 3920cee97f87e66d9b... - releaseFunds(txId) -> txhash: 0xf82e2019f02756f1...",
+    "[INFO] 95a8c99b2ee7d54746... - Funds locked: 0.10 tUSDC",
+    "[ERROR] 95a8c99b2ee7d54746... - Referee verdict: FAIL \u2014 Mock referee: payload contains hallucinated content",
+    "[TX] 95a8c99b2ee7d54746... - refundFunds(txId) -> txhash: 0x2cf1d50b33efe291...",
+    "[INFO] ab876c1439386a0c52... - Funds locked: 0.03 tUSDC",
+    "[OK] ab876c1439386a0c52... - Referee verdict: PASS \u2014 Mock referee: payload looks good",
+    "[TX] ab876c1439386a0c52... - releaseFunds(txId) -> txhash: 0xd4adcb418b5088c7..."
   ]
 }

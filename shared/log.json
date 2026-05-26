@@ -1,68 +1,69 @@
-[
-  {
-    "txId": "452c4ccff0610e43905b5cdaadf39d094851fd9fb6cd295fad2ec91e5c322128",
-    "buyer": "0xBuyer1000000000000000000000000000000000001",
-    "seller": "0xSeller100000000000000000000000000000000001",
-    "amount": "0.05",
-    "status": "FAILED",
-    "refereeVerdict": null,
-    "refereeReason": null,
-    "settlementTxHash": null,
-    "timestamp": "2026-05-26T16:25:29.284837+00:00"
-  },
-  {
-    "txId": "fe3497cfe5c91d88555aa00b0c2845d1840cb084ca3fc7b54895e2c241f0cdb1",
-    "buyer": "0xBuyer2000000000000000000000000000000000002",
-    "seller": "0xSeller200000000000000000000000000000000002",
-    "amount": "0.10",
-    "status": "FAILED",
-    "refereeVerdict": null,
-    "refereeReason": null,
-    "settlementTxHash": null,
-    "timestamp": "2026-05-26T16:25:33.293871+00:00"
-  },
-  {
-    "txId": "2cb5f014cdc9e615f165bbb49341246875e7b0c6ca4e918656594f22d4417da4",
-    "buyer": "0xBuyer1000000000000000000000000000000000001",
-    "seller": "0xSeller100000000000000000000000000000000001",
-    "amount": "0.03",
-    "status": "FAILED",
-    "refereeVerdict": null,
-    "refereeReason": null,
-    "settlementTxHash": null,
-    "timestamp": "2026-05-26T16:25:37.302302+00:00"
-  },
-  {
-    "txId": "8abdb1834490866fd0bb62ae35cab6cfcae749f34f508343c06f19d9a7a0ca46",
-    "buyer": "0xBuyer1000000000000000000000000000000000001",
-    "seller": "0xSeller100000000000000000000000000000000001",
-    "amount": "0.05",
-    "status": "RELEASED",
-    "refereeVerdict": "PASS",
-    "refereeReason": "Mock referee: payload looks good",
-    "settlementTxHash": "0xbd9553f43ec5e6cff7f24029f25d7d50905b8ec98662aa85a5188c778a39b7b1",
-    "timestamp": "2026-05-26T16:25:50.219066+00:00"
-  },
-  {
-    "txId": "23fee2f6d2d6ef99bdace463f9ee49459f5e025d438dfe65a8e24ca2b854e947",
-    "buyer": "0xBuyer2000000000000000000000000000000000002",
-    "seller": "0xSeller200000000000000000000000000000000002",
-    "amount": "0.10",
-    "status": "REFUNDED",
-    "refereeVerdict": "FAIL",
-    "refereeReason": "Mock referee: payload contains hallucinated content",
-    "settlementTxHash": "0x5a91a771d1a1eb21d95b9a36158b8b2dbdf03a0752bbe024f0bc3c94856a96a1",
-    "timestamp": "2026-05-26T16:25:54.225400+00:00"
-  },
-  {
-    "txId": "85f431f894e1dfe9000f4cbfe90264030d57fd0c8c722dc49851641bc43ebff8",
-    "buyer": "0xBuyer1000000000000000000000000000000000001",
-    "seller": "0xSeller100000000000000000000000000000000001",
-    "amount": "0.03",
-    "status": "RELEASED",
-    "refereeVerdict": "PASS",
-    "refereeReason": "Mock referee: payload looks good",
-    "settlementTxHash": "0x2c5d985f9fca2dcd40856345d616d290e66febe91680acc0ad827a2e8d9d80e3",
-    "timestamp": "2026-05-26T16:25:58.233272+00:00"
-  }
-]
+{
+  "transactions": [
+    {
+      "id": "0xdeadbeef000001",
+      "buyer": "0x1234567890abcdef1234567890abcdef12345678",
+      "seller": "0xabcdef1234567890abcdef1234567890abcdef12",
+      "amount": "25.00 tUSDC",
+      "status": "PENDING"
+    },
+    {
+      "id": "0xdeadbeef000002",
+      "buyer": "0xabcdefabcdefabcdefabcdefabcdefabcdefabcd",
+      "seller": "0xdeadbeefdeadbeefdeadbeefdeadbeefdeadbeef",
+      "amount": "30.00 tUSDC",
+      "status": "INSPECTING"
+    },
+    {
+      "id": "0xdeadbeef000003",
+      "buyer": "0xfeedfacefeedfacefeedfacefeedfacefeedface",
+      "seller": "0xbeefdeadbeefdeadbeefdeadbeefdeadbeefdead",
+      "amount": "40.00 tUSDC",
+      "status": "RELEASED"
+    },
+    {
+      "id": "3920cee97f87e66d9bd4a896df26df179b784dfc29b693a604a063feceb86477",
+      "buyer": "0xBuyer1000000000000000000000000000000000001",
+      "seller": "0xSeller100000000000000000000000000000000001",
+      "amount": "0.05 tUSDC",
+      "status": "RELEASED"
+    },
+    {
+      "id": "95a8c99b2ee7d547461b54fda966047be37b28fa6f8ff89b3345910c080b059d",
+      "buyer": "0xBuyer2000000000000000000000000000000000002",
+      "seller": "0xSeller200000000000000000000000000000000002",
+      "amount": "0.10 tUSDC",
+      "status": "REFUNDED"
+    },
+    {
+      "id": "ab876c1439386a0c5230c4b42ae6a124061f9528dda805bcbada0189997a5cdd",
+      "buyer": "0xBuyer1000000000000000000000000000000000001",
+      "seller": "0xSeller100000000000000000000000000000000001",
+      "amount": "0.03 tUSDC",
+      "status": "RELEASED"
+    }
+  ],
+  "logs": [
+    "[INFO] 0xdeadbeef000001 - Funds locked: 25.00 tUSDC",
+    "[INFO] 0xdeadbeef000001 - Fetching seller payload from mock API...",
+    "[OK] 0xdeadbeef000001 - Referee verdict: PASS",
+    "[TX] 0xdeadbeef000001 - releaseFunds(txId) -> txhash: 0xabc1234",
+    "[INFO] 0xdeadbeef000002 - Funds locked: 30.00 tUSDC",
+    "[INFO] 0xdeadbeef000002 - Fetching seller payload from mock API...",
+    "[ERROR] 0xdeadbeef000002 - Referee verdict: FAIL",
+    "[TX] 0xdeadbeef000002 - refundFunds(txId) -> txhash: 0xdef5678",
+    "[INFO] 0xdeadbeef000003 - Funds locked: 40.00 tUSDC",
+    "[INFO] 0xdeadbeef000003 - Fetching seller payload from mock API...",
+    "[OK] 0xdeadbeef000003 - Referee verdict: PASS",
+    "[TX] 0xdeadbeef000003 - releaseFunds(txId) -> txhash: 0xfeedface",
+    "[INFO] 3920cee97f87e66d9b... - Funds locked: 0.05 tUSDC",
+    "[OK] 3920cee97f87e66d9b... - Referee verdict: PASS \u2014 Mock referee: payload looks good",
+    "[TX] 3920cee97f87e66d9b... - releaseFunds(txId) -> txhash: 0xf82e2019f02756f1...",
+    "[INFO] 95a8c99b2ee7d54746... - Funds locked: 0.10 tUSDC",
+    "[ERROR] 95a8c99b2ee7d54746... - Referee verdict: FAIL \u2014 Mock referee: payload contains hallucinated content",
+    "[TX] 95a8c99b2ee7d54746... - refundFunds(txId) -> txhash: 0x2cf1d50b33efe291...",
+    "[INFO] ab876c1439386a0c52... - Funds locked: 0.03 tUSDC",
+    "[OK] ab876c1439386a0c52... - Referee verdict: PASS \u2014 Mock referee: payload looks good",
+    "[TX] ab876c1439386a0c52... - releaseFunds(txId) -> txhash: 0xd4adcb418b5088c7..."
+  ]
+}
